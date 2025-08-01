@@ -5,36 +5,74 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// Pink shades for light and dark themes
-private val LightPink = Color(0xFFE91E63)   // bright pink for light theme
-private val DarkPink = Color(0xFFAD1457)    // darker pink for dark theme
-
-// Silver shades for light and dark themes
-private val LightSilver = Color(0xFFC0C0C0)        // classic silver background for light theme
-private val DarkSilver = Color(0xFF9E9E9E)         // darker silver background for dark theme
-private val LightSilverText = Color(0xFF616161)    // dark gray text on silver background (light)
-private val DarkSilverText = Color(0xFFE0E0E0)     // light gray text on silver background (dark)
-
-private val LightColors = lightColorScheme(
-    primary = LightPink,
+private val LightColorScheme = lightColorScheme(
+    primary = DeepRose,
     onPrimary = Color.White,
-    background = LightSilver,
-    onBackground = LightSilverText,
-    surface = LightSilver,
-    onSurface = LightSilverText,
-    error = Color(0xFFB00020),
-    onError = Color.White
+    primaryContainer = SoftPink,
+    onPrimaryContainer = DarkGray,
+    
+    secondary = SoftLavender,
+    onSecondary = Color.White,
+    secondaryContainer = LavenderMist,
+    onSecondaryContainer = DarkGray,
+    
+    tertiary = GoldenAccent,
+    onTertiary = DarkGray,
+    tertiaryContainer = CreamWhite,
+    onTertiaryContainer = DarkGray,
+    
+    background = PearlWhite,
+    onBackground = CharcoalGray,
+    
+    surface = Color.White,
+    onSurface = CharcoalGray,
+    surfaceVariant = LightGray,
+    onSurfaceVariant = WarmGray,
+    
+    outline = WarmGray,
+    outlineVariant = LightGray,
+    
+    error = ErrorRed,
+    onError = Color.White,
+    errorContainer = Color(0xFFFFDAD6),
+    onErrorContainer = Color(0xFF410002),
+    
+    scrim = Color.Black.copy(alpha = 0.32f)
 )
 
-private val DarkColors = darkColorScheme(
-    primary = DarkPink,
-    onPrimary = Color.White,
-    background = DarkSilver,
-    onBackground = DarkSilverText,
-    surface = DarkSilver,
-    onSurface = DarkSilverText,
-    error = Color(0xFFCF6679),
-    onError = Color.Black
+private val DarkColorScheme = darkColorScheme(
+    primary = RoseGold,
+    onPrimary = DarkBackground,
+    primaryContainer = DarkRose,
+    onPrimaryContainer = Color.White,
+    
+    secondary = DarkLavender,
+    onSecondary = DarkBackground,
+    secondaryContainer = Color(0xFF4A4458),
+    onSecondaryContainer = Color.White,
+    
+    tertiary = GoldenAccent,
+    onTertiary = DarkBackground,
+    tertiaryContainer = Color(0xFF5C5B00),
+    onTertiaryContainer = Color.White,
+    
+    background = DarkBackground,
+    onBackground = Color.White,
+    
+    surface = DarkSurface,
+    onSurface = Color.White,
+    surfaceVariant = Color(0xFF49454F),
+    onSurfaceVariant = Color(0xFFCAC4D0),
+    
+    outline = Color(0xFF938F99),
+    outlineVariant = Color(0xFF49454F),
+    
+    error = Color(0xFFFFB4AB),
+    onError = Color(0xFF690005),
+    errorContainer = Color(0xFF93000A),
+    onErrorContainer = Color(0xFFFFDAD6),
+    
+    scrim = Color.Black.copy(alpha = 0.32f)
 )
 
 @Composable
@@ -42,11 +80,11 @@ fun BeautyHubTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) DarkColors else LightColors
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
-        colorScheme = colors,
-        typography = Typography(), // Use your custom Typography here if you want
+        colorScheme = colorScheme,
+        typography = Typography,
         content = content
     )
 }
