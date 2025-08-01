@@ -6,14 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.beautyhub.ui.theme.BeautyHubTheme
-import com.example.beautyhub.view.LoginScreen
-import com.example.beautyhub.view.RegisterScreen
-import com.example.beautyhub.view.SplashScreen
+import com.example.beautyhub.view.*
+import com.example.beautyhub.viewmodel.UserViewModel
+import com.example.beautyhub.viewmodel.ProductViewModel
+import com.example.beautyhub.viewmodel.CartViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
             BeautyHubTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
-                    BeautyHubNavGraph(navController)
+                    BeautyHubApp(navController)
                 }
             }
         }
@@ -31,11 +33,41 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BeautyHubNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") { SplashScreen(navController) }
-        composable("login") { LoginScreen(navController) }
-        composable("register") { RegisterScreen(navController) }
-        // Add more screens here
+fun BeautyHubApp(navController: NavHostController) {
+    // Shared ViewModels across the app
+    val userViewModel: UserViewModel = viewModel()
+    val productViewModel: ProductViewModel = viewModel()
+    val cartViewModel: CartViewModel = viewModel()
+    
+    NavHost(
+        navController = navController, 
+        startDestination = "splash"
+    ) {
+        composable("splash") { 
+            SplashScreen(navController) 
+        }
+        
+        composable("login") { 
+            LoginScreen(
+                navController = navController,
+                userViewModel = userViewModel
+            )
+        }
+        
+        composable("register") { 
+            RegisterScreen(
+                navController = navController,
+                userViewModel = userViewModel
+            )
+        }
+        
+        composable("home") { 
+            HomeScreen(
+                navController = navController,
+                userViewModel = userViewModel,
+                productViewModel = productViewModel,
+                cartViewModel = cartViewModel
+            )
+        }
     }
 }
